@@ -1,0 +1,28 @@
+igor@ubuntu01:~$ sudo docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+
+igor@ubuntu01:~$ sudo docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED        STATUS        PORTS                                                                                                                                                 NAMES
+3843b07682e5   rabbitmq:3-management   "docker-entrypoint.s…"   23 hours ago   Up 23 hours   4369/tcp, 5671/tcp, 0.0.0.0:5672->5672/tcp, :::5672->5672/tcp, 15671/tcp, 15691-15692/tcp, 25672/tcp, 0.0.0.0:15672->15672/tcp, :::15672->15672/tcp   cranky_antonelli
+
+igor@ubuntu01:~$ sudo docker exec 3843b07682e5 rabbitmqctl list_queues
+Timeout: 60.0 seconds ...
+Listing queues for vhost / ...
+name    messages
+hello   2
+igor@ubuntu01:~$
+
+igor@ubuntu01:~$ python3 send.py
+ [x] Sent 'Hello DevOps Hillel 2023!'
+igor@ubuntu01:~$ python3 send.py
+ [x] Sent 'Hello DevOps Hillel 2023!'
+igor@ubuntu01:~$ python3 send.py
+ [x] Sent 'Hello DevOps Hillel 2023!'
+igor@ubuntu01:~$
+
+
+
+igor@ubuntu01:~$ python3 receive.py
+ [*] Waiting for messages. To exit press CTRL+C
+ [x] Received b'Hello DevOps Hillel 2023!'
+ [x] Received b'Hello DevOps Hillel 2023!'
+ [x] Received b'Hello DevOps Hillel 2023!'
